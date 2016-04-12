@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>demo07</title>
+    <script src="build/react.js"></script>
+    <script src="build/react-dom.js"></script>
+    <script src="build/browser.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+      var MyComponent = React.createClass({
+        getInitialState: function(){
+          return {
+            input:"hello"
+          }
+        },
+        handleClick:function() {
+
+        console.log(this.refs.myTextInput.value)
+        },
+        handleChange:function(event) {
+          console.log(event.target.value)
+          this.setState({
+            input:event.target.value
+          })
+        },
+        render: function() {
+          return (
+            <div>
+              <input type="text" ref="myTextInput" onChange={this.handleChange}
+              value={this.state.input}/>
+              <input type="button" value="Focus the text input" onClick={this.handleClick} />
+              <h1>{this.state.input}</h1>
+            </div>);
+
+        }
+      });
+      ReactDOM.render(
+      <MyComponent />,
+      document.getElementById('example')
+      );
+    </script>
+  </body>
+</html>
