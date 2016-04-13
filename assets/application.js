@@ -64,6 +64,39 @@
 	      title: ''
 	    };
 	  },
+	  componentDidMount: function componentDidMount() {
+	    var todosKeys = Object.keys(localStorage);
+	    var todos = [];
+	    var _iteratorNormalCompletion = true;
+	    var _didIteratorError = false;
+	    var _iteratorError = undefined;
+
+	    try {
+	      for (var _iterator = todosKeys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	        var key = _step.value;
+
+	        var todo = JSON.parse(localStorage.getItem(key));
+	        todos.push(todo);
+	      }
+	    } catch (err) {
+	      _didIteratorError = true;
+	      _iteratorError = err;
+	    } finally {
+	      try {
+	        if (!_iteratorNormalCompletion && _iterator.return) {
+	          _iterator.return();
+	        }
+	      } finally {
+	        if (_didIteratorError) {
+	          throw _iteratorError;
+	        }
+	      }
+	    }
+
+	    this.setState({
+	      todos: todos
+	    });
+	  },
 	  handleSubmit: function handleSubmit(event) {
 	    event.preventDefault();
 	    var todo = {
@@ -81,22 +114,45 @@
 	      title: event.target.value
 	    });
 	  },
+	  handleClick: function handleClick(event) {
+	    localStorage.clear();
+	    this.setState({ todos: [], title: '' });
+	  },
+	  handleDelete: function handleDelete(id, event) {
+	    localStorage.removeItem('id:' + id);
+	    var todos = this.state.todos.filter(function (item) {
+	      return item.id != id;
+	    });
+	    this.setState({ todos: todos });
+	  },
 	  render: function render() {
+	    var _this = this;
+
 	    return _react2.default.createElement(
 	      'div',
 	      null,
 	      this.state.todos.map(function (item, index) {
 	        return _react2.default.createElement(
-	          'h1',
+	          'div',
 	          { key: index },
-	          item.title
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            item.title
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: _this.handleDelete.bind(_this, item.id) },
+	            'x'
+	          )
 	        );
 	      }),
 	      _react2.default.createElement(
 	        'form',
 	        { onSubmit: this.handleSubmit },
 	        _react2.default.createElement('input', { type: 'text', value: this.state.title, onChange: this.handleChange })
-	      )
+	      ),
+	      _react2.default.createElement('input', { type: 'button', value: '清空', onClick: this.handleClick })
 	    );
 	  }
 	});

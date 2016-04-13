@@ -7,6 +7,17 @@ const Todos = React.createClass({
       title:''
     }
   },
+  componentDidMount(){
+    const todosKeys = Object.keys(localStorage)
+    const todos = []
+    for (let key of todosKeys){
+      const todo = JSON.parse(localStorage.getItem(key))
+      todos.push(todo)
+    }
+    this.setState({
+      todos:todos
+    })
+  },
   handleSubmit(event){
     event.preventDefault()
     const todo = {
@@ -24,15 +35,27 @@ const Todos = React.createClass({
       title:event.target.value
     })
   },
+  handleClick(event){
+    localStorage.clear()
+    this.setState({todos:[],title:''})
+  },
+  handleDelete(id,event){
+    localStorage.removeItem('id:'+id)
+    const todos = this.state.todos.filter((item) => {
+      return item.id !=id
+    })
+  this.setState({todos:todos})
+  },
   render(){
     return (<div>
       {this.state.todos.map((item,index) => {
-        return(<h1 key={index}>{item.title}</h1>)
+        return(<div key={index}>
+          <span >{item.title}</span><button onClick={this.handleDelete.bind(this,item.id)}>x</button></div>)
       })}
     <form onSubmit={this.handleSubmit}>
       <input type = 'text' value={this.state.title} onChange={this.handleChange}/>
     </form>
-
+    <input type = 'button' value='清空'onClick={this.handleClick}/>
     </div>)
   }
 })
