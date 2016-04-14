@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	var _react = __webpack_require__(1);
 
@@ -56,108 +56,79 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Todos = _react2.default.createClass({
-	  displayName: 'Todos',
+	var TweetBox = _react2.default.createClass({
+	  displayName: "TweetBox",
+
 	  getInitialState: function getInitialState() {
 	    return {
-	      todos: [],
-	      title: ''
+	      text: '',
+	      photoAdded: false
 	    };
 	  },
-	  componentDidMount: function componentDidMount() {
-	    var todosKeys = Object.keys(localStorage);
-	    var todos = [];
-	    var _iteratorNormalCompletion = true;
-	    var _didIteratorError = false;
-	    var _iteratorError = undefined;
-
-	    try {
-	      for (var _iterator = todosKeys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	        var key = _step.value;
-
-	        var todo = JSON.parse(localStorage.getItem(key));
-	        todos.push(todo);
-	      }
-	    } catch (err) {
-	      _didIteratorError = true;
-	      _iteratorError = err;
-	    } finally {
-	      try {
-	        if (!_iteratorNormalCompletion && _iterator.return) {
-	          _iterator.return();
-	        }
-	      } finally {
-	        if (_didIteratorError) {
-	          throw _iteratorError;
-	        }
-	      }
-	    }
-
-	    this.setState({
-	      todos: todos
-	    });
-	  },
-	  handleSubmit: function handleSubmit(event) {
-	    event.preventDefault();
-	    var todo = {
-	      title: this.state.title,
-	      done: false,
-	      id: +new Date()
-	    };
-	    localStorage.setItem('id:' + todo.id, JSON.stringify(todo));
-	    this.setState({
-	      todos: this.state.todos.concat([todo])
-	    });
+	  togglePhoto: function togglePhoto(event) {
+	    this.setState({ photoAdded: !this.state.photoAdded });
 	  },
 	  handleChange: function handleChange(event) {
 	    this.setState({
-	      title: event.target.value
-	    });
+	      text: event.target.value });
 	  },
-	  handleClick: function handleClick(event) {
-	    localStorage.clear();
-	    this.setState({ todos: [], title: '' });
+	  overflowAlert: function overflowAlert() {
+	    if (this.remainingCharaters() < 0) {
+	      var beforeOverflowText = this.state.text.substring(140 - 10, 140);
+	      var overflowText = this.state.text.substring(140);
+	      return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	          "strong",
+	          null,
+	          "Oops! Too Long:"
+	        ),
+	        " ...",
+	        beforeOverflowText,
+	        _react2.default.createElement(
+	          "strong",
+	          null,
+	          overflowText
+	        )
+	      );
+	    } else {
+	      return "";
+	    }
 	  },
-	  handleDelete: function handleDelete(id, event) {
-	    localStorage.removeItem('id:' + id);
-	    var todos = this.state.todos.filter(function (item) {
-	      return item.id != id;
-	    });
-	    this.setState({ todos: todos });
+	  remainingCharaters: function remainingCharaters() {
+	    if (this.state.photoAdded) {
+	      return 140 - 23 - this.state.text.length;
+	    } else {
+	      return 140 - this.state.text.length;
+	    }
 	  },
 	  render: function render() {
-	    var _this = this;
-
 	    return _react2.default.createElement(
-	      'div',
+	      "div",
 	      null,
-	      this.state.todos.map(function (item, index) {
-	        return _react2.default.createElement(
-	          'div',
-	          { key: index },
-	          _react2.default.createElement(
-	            'span',
-	            null,
-	            item.title
-	          ),
-	          _react2.default.createElement(
-	            'button',
-	            { onClick: _this.handleDelete.bind(_this, item.id) },
-	            'x'
-	          )
-	        );
-	      }),
+	      this.overflowAlert(),
+	      _react2.default.createElement("textarea", { onChange: this.handleChange }),
+	      _react2.default.createElement("br", null),
 	      _react2.default.createElement(
-	        'form',
-	        { onSubmit: this.handleSubmit },
-	        _react2.default.createElement('input', { type: 'text', value: this.state.title, onChange: this.handleChange })
+	        "button",
+	        { disabled: this.remainingCharaters() === 140 },
+	        "Tweet"
 	      ),
-	      _react2.default.createElement('input', { type: 'button', value: '清空', onClick: this.handleClick })
+	      _react2.default.createElement(
+	        "span",
+	        null,
+	        this.remainingCharaters()
+	      ),
+	      _react2.default.createElement(
+	        "button",
+	        { onClick: this.togglePhoto },
+	        this.state.photoAdded ? '👍 Photo Added' : 'Add Photo'
+	      )
 	    );
 	  }
 	});
-
-	_reactDom2.default.render(_react2.default.createElement(Todos, null), document.getElementById('app'));
+	_reactDom2.default.render(_react2.default.createElement(TweetBox, null), document.getElementById('app'));
 
 /***/ },
 /* 1 */
