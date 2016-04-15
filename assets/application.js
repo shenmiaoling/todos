@@ -61,10 +61,45 @@
 
 	  getInitialState: function getInitialState() {
 	    return {
+	      tweets: [],
 	      text: '',
 	      photoAdded: false
 	    };
 	  },
+	  componentDidMount: function componentDidMount() {
+	    var tweetsKey = Object.keys(localStorage);
+	    var tweets = [];
+	    var _iteratorNormalCompletion = true;
+	    var _didIteratorError = false;
+	    var _iteratorError = undefined;
+
+	    try {
+	      for (var _iterator = tweetsKey[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	        var key = _step.value;
+
+	        var tweet = JSON.parse(localStorage.getItem(key));
+	        tweets.push(tweet);
+	      }
+	    } catch (err) {
+	      _didIteratorError = true;
+	      _iteratorError = err;
+	    } finally {
+	      try {
+	        if (!_iteratorNormalCompletion && _iterator.return) {
+	          _iterator.return();
+	        }
+	      } finally {
+	        if (_didIteratorError) {
+	          throw _iteratorError;
+	        }
+	      }
+	    }
+
+	    this.setState({
+	      tweets: tweets
+	    });
+	  },
+
 	  togglePhoto: function togglePhoto(event) {
 	    this.setState({ photoAdded: !this.state.photoAdded });
 	  },
@@ -72,6 +107,19 @@
 	    this.setState({
 	      text: event.target.value });
 	  },
+	  handleSubmit: function handleSubmit(event) {
+	    event.preventDefault();
+	    var tweet = {
+	      text: this.state.text,
+	      done: false,
+	      id: +new Date()
+	    };
+	    localStorage.setItem('id:' + tweet.id, JSON.stringify(tweet));
+	    this.setState({
+	      tweets: this.state.tweets.concat([tweet])
+	    });
+	  },
+
 	  overflowAlert: function overflowAlert() {
 	    if (this.remainingCharaters() < 0) {
 	      var beforeOverflowText = this.state.text.substring(140 - 10, 140);
@@ -98,32 +146,60 @@
 	  },
 	  remainingCharaters: function remainingCharaters() {
 	    if (this.state.photoAdded) {
-	      return 140 - 23 - this.state.text.length;
+	      return 140 - 135 - this.state.text.length;
 	    } else {
 	      return 140 - this.state.text.length;
 	    }
+	  },
+	  handleClick: function handleClick() {
+	    localStorage.clear();
+	    this.setState({
+	      tweets: [],
+	      text: ''
+	    });
 	  },
 	  render: function render() {
 	    return _react2.default.createElement(
 	      "div",
 	      null,
-	      this.overflowAlert(),
-	      _react2.default.createElement("textarea", { onChange: this.handleChange }),
-	      _react2.default.createElement("br", null),
 	      _react2.default.createElement(
-	        "button",
-	        { disabled: this.remainingCharaters() === 140 },
-	        "Tweet"
+	        "div",
+	        null,
+	        this.overflowAlert(),
+	        this.state.tweets.map(function (item, index) {
+	          return _react2.default.createElement(
+	            "h1",
+	            { key: index },
+	            item.text
+	          );
+	        })
+	      ),
+	      _react2.default.createElement(
+	        "form",
+	        { onSubmit: this.handleSubmit },
+	        _react2.default.createElement("textarea", { onChange: this.handleChange }),
+	        _react2.default.createElement("br", null),
+	        _react2.default.createElement(
+	          "button",
+	          { id: "push", disabled: this.remainingCharaters() === 140 },
+	          "发布"
+	        )
 	      ),
 	      _react2.default.createElement(
 	        "span",
 	        null,
+	        "剩余字数：",
 	        this.remainingCharaters()
 	      ),
 	      _react2.default.createElement(
 	        "button",
-	        { onClick: this.togglePhoto },
+	        { id: "Addphoto", onClick: this.togglePhoto },
 	        this.state.photoAdded ? '👍 Photo Added' : 'Add Photo'
+	      ),
+	      _react2.default.createElement(
+	        "button",
+	        { id: "clear", onClick: this.handleClick },
+	        "清空"
 	      )
 	    );
 	  }

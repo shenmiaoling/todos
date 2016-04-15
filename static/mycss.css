@@ -1,4 +1,55 @@
-#h1 {
+h1 {
   color: pink;
-  background: #F44336;
+}
+textarea {
+  width: 900px;
+  height: 100px;
+  resize: none;
+  border-color: #3CA5B2;
+  border-radius: 0.8rem;
+  margin-left: 120px;
+}
+#push {
+  width: 90px;
+  height: 30px;
+  font-size: 18px;
+  border-radius: 3px;
+  letter-spacing: 1px;
+  border: none;
+  background-color: #4EAACC;
+  color: #FFF;
+  cursor: pointer;
+  float:right;
+  margin-right: 380px;
+  margin-top: 15px
+}
+span {
+  font-size: 20px;
+  float: right;
+  margin-top: 20px;
+  margin-right: 10px;
+  color: #2196F3
+}
+#Addphoto {
+  width: 120px;
+  height: 30px;
+  border-radius: 3px;
+  letter-spacing: 1px;
+  border: none;
+  margin-left: 150px;
+  margin-top: 50px;
+  color: pink;
+  background-color: #00BCD4;
+}
+#clear {
+  width: 120px;
+  height: 30px;
+  border-radius: 3px;
+  letter-spacing: 1px;
+  border: none;
+  margin-left: 10px;
+  margin-top: 50px;
+  font-size: 18px;
+  background-color: #00BCD4;
+  color: #FFF
 }
