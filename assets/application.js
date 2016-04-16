@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var _react = __webpack_require__(1);
 
@@ -56,155 +56,52 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var TweetBox = _react2.default.createClass({
-	  displayName: "TweetBox",
-
+	var MyForm = _react2.default.createClass({
+	  displayName: 'MyForm',
 	  getInitialState: function getInitialState() {
 	    return {
-	      tweets: [],
-	      text: '',
-	      photoAdded: false
+	      options: { a: [], b: [], c: [] }
 	    };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    var tweetsKey = Object.keys(localStorage);
-	    var tweets = [];
-	    var _iteratorNormalCompletion = true;
-	    var _didIteratorError = false;
-	    var _iteratorError = undefined;
-
-	    try {
-	      for (var _iterator = tweetsKey[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	        var key = _step.value;
-
-	        var tweet = JSON.parse(localStorage.getItem(key));
-	        tweets.push(tweet);
-	      }
-	    } catch (err) {
-	      _didIteratorError = true;
-	      _iteratorError = err;
-	    } finally {
-	      try {
-	        if (!_iteratorNormalCompletion && _iterator.return) {
-	          _iterator.return();
-	        }
-	      } finally {
-	        if (_didIteratorError) {
-	          throw _iteratorError;
-	        }
-	      }
-	    }
-
-	    this.setState({
-	      tweets: tweets
-	    });
-	  },
-
-	  togglePhoto: function togglePhoto(event) {
-	    this.setState({ photoAdded: !this.state.photoAdded });
 	  },
 	  handleChange: function handleChange(event) {
+	    var options = this.state.options;
+	    options[event.target.name] = [event.target.value, event.target.checked];
 	    this.setState({
-	      text: event.target.value });
-	  },
-	  handleSubmit: function handleSubmit(event) {
-	    event.preventDefault();
-	    var tweet = {
-	      text: this.state.text,
-	      done: false,
-	      id: +new Date()
-	    };
-	    localStorage.setItem('id:' + tweet.id, JSON.stringify(tweet));
-	    this.setState({
-	      tweets: this.state.tweets.concat([tweet])
+	      options: options
 	    });
 	  },
+	  submitHandler: function submitHandler(event) {
+	    var _this = this;
 
-	  overflowAlert: function overflowAlert() {
-	    if (this.remainingCharaters() < 0) {
-	      var beforeOverflowText = this.state.text.substring(140 - 10, 140);
-	      var overflowText = this.state.text.substring(140);
-	      return _react2.default.createElement(
-	        "div",
-	        null,
-	        _react2.default.createElement(
-	          "strong",
-	          null,
-	          "Oops! Too Long:"
-	        ),
-	        " ...",
-	        beforeOverflowText,
-	        _react2.default.createElement(
-	          "strong",
-	          null,
-	          overflowText
-	        )
-	      );
-	    } else {
-	      return "";
-	    }
-	  },
-	  remainingCharaters: function remainingCharaters() {
-	    if (this.state.photoAdded) {
-	      return 140 - 135 - this.state.text.length;
-	    } else {
-	      return 140 - this.state.text.length;
-	    }
-	  },
-	  handleClick: function handleClick() {
-	    localStorage.clear();
-	    this.setState({
-	      tweets: [],
-	      text: ''
+	    event.preventDefault();
+	    var options = [];
+	    Object.keys(this.state.options).map(function (key, index) {
+	      if (_this.state.options[key][1]) {
+	        options[index] = _this.state.options[key][0];
+	      }
 	    });
+	    alert(options.join(' ').trim());
 	  },
 	  render: function render() {
 	    return _react2.default.createElement(
-	      "div",
-	      null,
+	      'form',
+	      { onSubmit: this.submitHandler },
+	      _react2.default.createElement('input', { type: 'checkbox', name: 'a', value: 'A', checked: this.state.options.a[1], onChange: this.handleChange }),
+	      'A',
+	      _react2.default.createElement('input', { type: 'checkbox', name: 'b', value: 'B', checked: this.state.options.b[1], onChange: this.handleChange }),
+	      'B',
+	      _react2.default.createElement('input', { type: 'checkbox', name: 'c', value: 'C', checked: this.state.options.c[1], onChange: this.handleChange }),
+	      'C',
+	      _react2.default.createElement('br', null),
 	      _react2.default.createElement(
-	        "div",
-	        null,
-	        this.overflowAlert(),
-	        this.state.tweets.map(function (item, index) {
-	          return _react2.default.createElement(
-	            "h1",
-	            { key: index },
-	            item.text
-	          );
-	        })
-	      ),
-	      _react2.default.createElement(
-	        "form",
-	        { onSubmit: this.handleSubmit },
-	        _react2.default.createElement("textarea", { onChange: this.handleChange }),
-	        _react2.default.createElement("br", null),
-	        _react2.default.createElement(
-	          "button",
-	          { id: "push", disabled: this.remainingCharaters() === 140 },
-	          "发布"
-	        )
-	      ),
-	      _react2.default.createElement(
-	        "span",
-	        null,
-	        "剩余字数：",
-	        this.remainingCharaters()
-	      ),
-	      _react2.default.createElement(
-	        "button",
-	        { id: "Addphoto", onClick: this.togglePhoto },
-	        this.state.photoAdded ? '👍 Photo Added' : 'Add Photo'
-	      ),
-	      _react2.default.createElement(
-	        "button",
-	        { id: "clear", onClick: this.handleClick },
-	        "清空"
+	        'button',
+	        { type: 'submit' },
+	        'Speak'
 	      )
 	    );
 	  }
 	});
-	_reactDom2.default.render(_react2.default.createElement(TweetBox, null), document.getElementById('app'));
+	_reactDom2.default.render(_react2.default.createElement(MyForm, null), document.getElementById('app'));
 
 /***/ },
 /* 1 */
