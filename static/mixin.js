@@ -13,9 +13,7 @@ var Timer = React.createClass({
   },
   componentDidMount() {
     this.setInterval(
-      this.tick,1
-
-      000
+      this.tick,1000
       );
   },
   render (){

@@ -1,6 +1,14 @@
 h1 {
   color: pink;
 }
+.center{
+  text-align:center;
+}
+.login_button{
+  width: 80px;
+  height: 25px;
+  margin: 20px;
+}
 textarea {
   width: 900px;
   height: 100px;
@@ -23,13 +31,9 @@ textarea {
   margin-right: 380px;
   margin-top: 15px
 }
-/*span {
-  font-size: 20px;
-  float: right;
-  margin-top: 20px;
-  margin-right: 10px;
-  color: #2196F3
-}*/
+.loginform{
+  text-align: center
+}
 #Addphoto {
   width: 120px;
   height: 30px;

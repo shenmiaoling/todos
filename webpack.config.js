@@ -9,9 +9,12 @@ const sassLoaders = [
 ];
 
 module.exports = {
-  entry: './static/option.js',
+  entry: {
+    log_in: './static/log_in.js',
+    sign_up:'./static/sign_up.js'
+  },
   output: {
-    filename: 'application.js',
+    filename: '[name].js',
     path: path.join(__dirname, './assets')
   },
   module: {
