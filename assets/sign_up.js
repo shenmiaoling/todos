@@ -58,6 +58,10 @@
 
 	var SignUp = _react2.default.createClass({
 	  displayName: 'SignUp',
+	  handleClick: function handleClick(event) {
+	    event.preventDefault();
+	    alert('注册成功');
+	  },
 	  render: function render() {
 	    return _react2.default.createElement(
 	      'form',
@@ -72,7 +76,8 @@
 	        null,
 	        '用户名：'
 	      ),
-	      _react2.default.createElement('input', { type: 'text' }),
+	      _react2.default.createElement('input', { type: 'text',
+	        placeholder: '不能包含特殊字符' }),
 	      _react2.default.createElement('br', null),
 	      _react2.default.createElement('br', null),
 	      _react2.default.createElement(
@@ -80,7 +85,9 @@
 	        null,
 	        '邮箱：'
 	      ),
-	      _react2.default.createElement('input', { type: 'text' }),
+	      _react2.default.createElement('input', { type: 'email',
+	        placeholder: '使用正确邮箱格式'
+	      }),
 	      _react2.default.createElement('br', null),
 	      _react2.default.createElement('br', null),
 	      _react2.default.createElement(
@@ -88,7 +95,8 @@
 	        null,
 	        '密码：'
 	      ),
-	      _react2.default.createElement('input', { type: 'password' }),
+	      _react2.default.createElement('input', { type: 'password',
+	        placeholder: '6位数字密码' }),
 	      _react2.default.createElement('br', null),
 	      _react2.default.createElement('br', null),
 	      _react2.default.createElement(
@@ -96,7 +104,16 @@
 	        null,
 	        '再次确认密码：'
 	      ),
-	      _react2.default.createElement('input', { type: 'password' })
+	      _react2.default.createElement('input', { type: 'password' }),
+	      _react2.default.createElement('br', null),
+	      _react2.default.createElement('br', null),
+	      _react2.default.createElement(
+	        'button',
+	        {
+	          type: 'submit',
+	          onClick: this.handleClick },
+	        '提交'
+	      )
 	    );
 	  }
 	});

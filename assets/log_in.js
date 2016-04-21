@@ -58,27 +58,15 @@
 
 	var ContactView = _react2.default.createClass({
 	  displayName: 'ContactView',
-	  getInitialState: function getInitialState() {
-	    return {
-	      user_name: ''
-	    };
-	  },
-	  handleChange: function handleChange(name, event) {
-	    var newState = {};
-	    newState[name] = event.target.value;
-	    this.setState(newState);
-	  },
 	  submitHandler: function submitHandler(event) {
 	    event.preventDefault();
-	    alert('Hi', user_name);
+	    alert('Hi');
 	  },
 	  render: function render() {
 	    return _react2.default.createElement(
 	      'form',
 	      {
-	        className: 'loginform',
-	        align: 'center',
-	        onSubmit: this.submitHandler },
+	        className: 'loginform' },
 	      _react2.default.createElement(
 	        'h1',
 	        null,
@@ -89,9 +77,7 @@
 	        null,
 	        '邮箱：',
 	        _react2.default.createElement('input', {
-	          type: 'text',
-	          value: this.state.user_name,
-	          onChange: this.handleChange })
+	          type: 'text' })
 	      ),
 	      _react2.default.createElement('br', null),
 	      _react2.default.createElement('br', null),
@@ -104,14 +90,15 @@
 	      _react2.default.createElement('br', null),
 	      _react2.default.createElement(
 	        'button',
-	        { className: 'login_button', type: 'submit' },
+	        { className: 'login_button', type: 'submit',
+	          onClick: this.submitHandler },
 	        '登陆'
 	      ),
 	      _react2.default.createElement('br', null),
 	      _react2.default.createElement(
 	        'label',
 	        null,
-	        '忘记密码?立即',
+	        '没有注册账号?立即',
 	        _react2.default.createElement(
 	          'a',
 	          { href: '/sign_up' },

@@ -10,11 +10,12 @@ const sassLoaders = [
 
 module.exports = {
   entry: {
-    log_in: './static/log_in.js',
-    sign_up:'./static/sign_up.js'
+    application: './static/react_router.js',
+    // sign_up:'./static/sign_up.js'
   },
   output: {
-    filename: '[name].js',
+    // filename: '[name].js',
+    filename: 'application.js',
     path: path.join(__dirname, './assets')
   },
   module: {
